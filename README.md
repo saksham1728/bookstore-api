@@ -1,4 +1,4 @@
-Here's the updated README.md with your Postman documentation link added at the top, maintaining all the previous improvements:
+
 
 ```markdown
 # Bookstore API — Testing & Optional Features
@@ -7,6 +7,7 @@ Here's the updated README.md with your Postman documentation link added at the t
 This guide covers:
 1. Testing all endpoints (registration, login, book CRUD)
 2. Optional features: filtering by genre and pagination
+3. Postman documentation in the last section
 
 ---
 
