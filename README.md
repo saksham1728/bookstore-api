@@ -2,12 +2,14 @@
 
 ```markdown
 # Bookstore API — Testing & Optional Features
+# if you want the reference to api testing here is the postman documentation :-https://bearconnect-3881.postman.co/workspace/Bearconnect-Workspace~cdb786b7-36ce-4f4c-8c90-b5f3f84885ea/collection/42697506-b8d61268-20b5-41e6-86be-7beb02753c8b?action=share&creator=42697506
 
 This guide covers:
 1. Testing all endpoints (registration, login, book CRUD)
 2. Optional features: filtering by genre and pagination
 
 ---
+
 
 ## 🧪 1. Testing All Routes
 
