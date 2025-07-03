@@ -1,4 +1,4 @@
-Here's a well-formatted and readable version of your README.md using proper Markdown syntax:
+
 
 ```markdown
 # Bookstore API — Testing & Optional Features
