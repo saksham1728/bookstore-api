@@ -1,35 +1,35 @@
-````markdown
+Here's a well-formatted and readable version of your README.md using proper Markdown syntax:
+
+```markdown
 # Bookstore API — Testing & Optional Features
 
 This guide covers:
-
-1. **Testing all endpoints** (registration, login, book CRUD)  
-2. **Optional features**: filtering by genre and pagination  
+1. Testing all endpoints (registration, login, book CRUD)
+2. Optional features: filtering by genre and pagination
 
 ---
 
 ## 🧪 1. Testing All Routes
 
-> Base URL: `http://localhost:3000/api`  
-> Make sure your server is running (`npm run dev` or `npm start`).
+> **Base URL**: `http://localhost:3000/api`  
+> **Note**: Ensure your server is running (`npm run dev` or `npm start`)
 
 ### 1.1 Register a New User
-
-- **Endpoint**: `POST /register`  
-- **Headers**: `Content-Type: application/json`  
-- **Body**:
+- **Endpoint**: `POST /register`
+- **Headers**:
+  ```http
+  Content-Type: application/json
+  ```
+- **Request Body**:
   ```json
   {
     "email": "alice@example.com",
     "password": "password123"
   }
-````
-
-* **Expected Response**:
-
-  * **Status**: `201 Created`
-  * **Body**:
-
+  ```
+- **Expected Response**:
+  - Status: `201 Created`
+  - Body:
     ```json
     {
       "id": "<new-user-uuid>",
@@ -38,50 +38,46 @@ This guide covers:
     ```
 
 ### 1.2 Login & Obtain JWT
-
-* **Endpoint**: `POST /login`
-* **Headers**: `Content-Type: application/json`
-* **Body**:
-
+- **Endpoint**: `POST /login`
+- **Headers**:
+  ```http
+  Content-Type: application/json
+  ```
+- **Request Body**:
   ```json
   {
     "email": "alice@example.com",
     "password": "password123"
   }
   ```
-* **Expected Response**:
-
-  * **Status**: `200 OK`
-  * **Body**:
-
+- **Expected Response**:
+  - Status: `200 OK`
+  - Body:
     ```json
     {
       "token": "<your-jwt-token>"
     }
     ```
-* **Next Step**: copy the `token` for protected requests.
+> **Important**: Copy the `token` for use in protected requests
 
 ---
 
 ### 1.3 Protected Book Routes
+> **Required Header for all endpoints below**:
+> ```http
+> Authorization: Bearer <your-jwt-token>
+> ```
 
-> **Header** for all below:
-> `Authorization: Bearer <your-jwt-token>`
-
-#### a. GET All Books
-
-* **Endpoint**: `GET /books`
-* **Example**:
-
-  ```
-  GET http://localhost:3000/api/books
+#### a. Get All Books
+- **Endpoint**: `GET /books`
+- **Example Request**:
+  ```http
+  GET /api/books
   Authorization: Bearer <token>
   ```
-* **Expected Response**:
-
-  * **Status**: `200 OK`
-  * **Body** (empty array on fresh data):
-
+- **Expected Response**:
+  - Status: `200 OK`
+  - Body:
     ```json
     {
       "data": [],
@@ -94,12 +90,9 @@ This guide covers:
     }
     ```
 
-#### b. POST Create a Book
-
-* **Endpoint**: `POST /books`
-* **Headers**: `Content-Type: application/json` + Authorization
-* **Body**:
-
+#### b. Create a Book
+- **Endpoint**: `POST /books`
+- **Request Body**:
   ```json
   {
     "title": "1984",
@@ -108,11 +101,9 @@ This guide covers:
     "publishedYear": 1949
   }
   ```
-* **Expected Response**:
-
-  * **Status**: `201 Created`
-  * **Body**:
-
+- **Expected Response**:
+  - Status: `201 Created`
+  - Body:
     ```json
     {
       "id": "<new-book-uuid>",
@@ -124,101 +115,82 @@ This guide covers:
     }
     ```
 
-#### c. GET a Book by ID
-
-* **Endpoint**: `GET /books/:id`
-* **Example**:
-
-  ```
-  GET http://localhost:3000/api/books/<new-book-uuid>
+#### c. Get Book by ID
+- **Endpoint**: `GET /books/:id`
+- **Example Request**:
+  ```http
+  GET /api/books/<new-book-uuid>
   Authorization: Bearer <token>
   ```
-* **Expected Response**:
+- **Expected Response**:
+  - Status: `200 OK`
+  - Body: Full book object
 
-  * **Status**: `200 OK`
-  * **Body**: the book object
-
-#### d. PUT Update a Book
-
-* **Endpoint**: `PUT /books/:id`
-* **Headers**: `Content-Type: application/json` + Authorization
-* **Body** (any fields to change):
-
+#### d. Update a Book
+- **Endpoint**: `PUT /books/:id`
+- **Request Body** (partial update supported):
   ```json
   {
     "genre": "Political Fiction"
   }
   ```
-* **Expected Response**:
+- **Expected Response**:
+  - Status: `200 OK`
+  - Body: Updated book object
 
-  * **Status**: `200 OK`
-  * **Body**: updated book object
-
-#### e. DELETE a Book
-
-* **Endpoint**: `DELETE /books/:id`
-* **Example**:
-
-  ```
-  DELETE http://localhost:3000/api/books/<new-book-uuid>
+#### e. Delete a Book
+- **Endpoint**: `DELETE /books/:id`
+- **Example Request**:
+  ```http
+  DELETE /api/books/<new-book-uuid>
   Authorization: Bearer <token>
   ```
-* **Expected Response**:
-
-  * **Status**: `204 No Content`
+- **Expected Response**:
+  - Status: `204 No Content`
 
 ---
 
 ## 🔎 2. Optional Features: Filtering & Pagination
 
-The **GET `/books`** endpoint now supports:
-
-* **Filter by genre**: `?genre=<genreName>`
-* **Pagination**: `?page=<n>&limit=<m>`
+### GET `/books` supports:
+- Genre filtering: `?genre=<genreName>`
+- Pagination: `?page=<n>&limit=<m>`
 
 ### 2.1 Filter by Genre
-
-* **Example**:
-
-  ```
-  GET http://localhost:3000/api/books?genre=Dystopian
+- **Example**:
+  ```http
+  GET /api/books?genre=Dystopian
   Authorization: Bearer <token>
   ```
-* **Behavior**: returns only books whose `genre` (case‑insensitive) matches `Dystopian`.
+- **Behavior**: Returns books with matching genre (case-insensitive)
 
 ### 2.2 Pagination
-
-* **Example**:
-
-  ```
-  GET http://localhost:3000/api/books?page=2&limit=5
+- **Example**:
+  ```http
+  GET /api/books?page=2&limit=5
   Authorization: Bearer <token>
   ```
-* **Behavior**:
-
-  * `page` (1‑based) and `limit` control the slice of the result.
-  * Defaults: `page=1`, `limit=10` if omitted.
+- **Defaults**: 
+  - `page=1` 
+  - `limit=10` (when omitted)
 
 ### 2.3 Combined Usage
-
-* **Example**:
-
-  ```
-  GET http://localhost:3000/api/books?genre=Fantasy&page=3&limit=2
+- **Example**:
+  ```http
+  GET /api/books?genre=Fantasy&page=3&limit=2
   Authorization: Bearer <token>
   ```
-* **Expected Response**:
-
+- **Expected Response**:
   ```json
   {
-    "data": [ /* up to 2 Fantasy books from page 3 */ ],
+    "data": [ /* Results here */ ],
     "meta": {
-      "totalCount": <number of Fantasy books>,
-      "totalPages": <ceil(totalCount/2)>,
+      "totalCount": 25,
+      "totalPages": 13,
       "page": 3,
       "limit": 2
     }
   }
   ```
+```
 
----
